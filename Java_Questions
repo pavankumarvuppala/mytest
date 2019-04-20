@@ -1,0 +1,80 @@
+
+Q:how to move object from heap to string pool ?
+A: Using inter();
+public static void main(String[] args) {
+    String s3 = new String("Test");
+    s3 = s3.intern();
+    String s4 = "Test";
+    System.out.println(s3 == s4);//fasle(i need true)
+}
+
+Why we need to implement cloneable interface to make clone work?
+A: Object.clone() method is protected.
+
+What if we don’t implement Cloneable interface?
+The program would throw CloneNotSupportedException if we don’t implement the Cloneable interface. A class implements the Cloneable interface to indicate to the Object.clone() method that it is legal for that method to make a field-for-field copy of instances of that class.
+
+public class DogName implements Cloneable {
+
+   private String dname;
+
+   public DogName(String dname) {
+	this.dname = dname;
+   }
+
+   public String getName() {
+	return dname;
+   }
+   // Overriding clone() method of Object class
+   public Object clone()throws CloneNotSupportedException{  
+	return (DogName)super.clone();  
+   }
+	
+   public static void main(String[] args) {
+	DogName obj1 = new DogName("Tommy");
+	try {
+		DogName obj2 = (DogName) obj1.clone();
+		System.out.println(obj2.getName());
+	} catch (CloneNotSupportedException e) {
+		e.printStackTrace();
+	}
+   }
+}
+
+Important Points to Note in the above example:
+1) The class “DogName” implements Cloneable interface.
+2) Our class “DogName” overrides clone() method of Object class.
+3) During clone() method call we handle CloneNotSupportedException using try catch blocks.
+
+What if we don’t implement Cloneable interface?
+The program would throw CloneNotSupportedException if we don’t implement the Cloneable interface. A class implements the Cloneable interface to indicate to the Object.clone() method that it is legal for that method to make a field-for-field copy of instances of that class.
+
+Does clone object and original object point to the same location in memory
+The answer is no. The clone object has its own space in the memory where it copies the content of the original object. That’s why when we change the content of original object after cloning
+
+
+String and new String
+
+extends String
+final ArrayList is it a valid? yes but you cannot use the same reference to reinitialize value throws error.
+
+private class A is it valid? yes but only in inner classes
+
+What are the ways to make a class singleton. 
+- Make the constructor private.
+- Create a static varaible by creating instance of the same class
+- return using a static function like getInstance();
+
+
+Make constructor as private.
+Write a static method that has return type object of this singleton class. Here, the concept of Lazy initialization in used to write this static method.
+
+What is the use of String intern method?
+You can move String object from heap to string pool.
+
+Concurrency example
+when should we use interfaces in java application?
+how to make a class immutable?
+
+@GetMapping vs @RequestMapping?
+runTime vs compile time polymorphism
