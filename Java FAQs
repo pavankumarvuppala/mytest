@@ -1,0 +1,93 @@
+What is externalizable interface? -- done
+Transient key word?
+Class level lock?
+Question on serialization
+Types of statements in jdbc?
+benifit of prepared statements -- done
+What are sequences in oracle?
+left outer join and right join
+What is webservice and how is it differ from web application? -- DONE
+What is stateless and stateful?
+Rest is stateful or stateless?
+What is advantage of soap over rest
+key difference between setter and constructor injection?
+which is more secure soap or rest? why?
+What is design pattern and what is the advantage of using design pattern?
+What is hibernate caching and why is it needed?
+What is difference between @Restcontroller and @Controller annotations
+When do you use Interface in your application?
+Difference between jpa and hibernate?
+=====================================
+Difference between split and substring?
+s = india
+s.substring (0,2) will it produce new string?
+How will you check if a string available in a huge file?
+Available methods in Object class?
+notify? notifyall?
+Synchronized method vs Synchronized block
+what is dispacher Servlet?
+servlet container has dependency injection?
+Why do we go for Factory pattern?
+Lazy loading in Hibernate?
+What are scopes and questions on it?
+What is a self join?
+Why Indexes are used?
+what are spring repositories?
+Hibernate Pagination?
+Wat is runnable and callable?
+Wait and notify belong to which class?
+List the Object class methods.?
+
+Defog Tech --> check playlist on youtube
+
+How to make a class immutable?
+Examples of immutable classes othe than string?
+Java generics
+Junit
+
+Deloitte:
+
+what are the implicit objects in jsp?
+by default what are variable types in Interface?
+can a method be static and final?
+Hibernate cache levels?
+Ways to create string objects
+When a string is created using new operator where will it get created?
+What is intern function use
+Junit test?
+UI part?
+How to make class Singleton?
+final ArrayList<String> s = new ArrayList<String> (); --> is it a valid statement?
+Difference between sleep and wait in threads
+why wait method need to called in synchronized block
+
+
+SOLID PRINCIPLES?
+how spring mvc works interally?
+@RequestMapping working?
+What are functional interfaces? what are the benifits of the functional interfaces?
+What are streams in java?
+how spring boot does auto configuration?
+how can we create multi data sources in spring boot?
+Spring bean lifecycle
+
+
+Starvation and Deadlock
+in producer and consumer problem does dead lock occure?
+When thread locks the object, where this information is stored in the java?
+
+Thread pool
+ThreadLocal
+Thread executor service.
+Thread factory
+Thread session id
+callable interface
+
+difference between runnable and callable?
+
+Benifits of stream api in java
+
+
+POS
+IOT
+SDLC knowledge
