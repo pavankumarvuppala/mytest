@@ -1,0 +1,354 @@
+What is externalizable interface? 
+Externalizable interface in Java
+Externalization serves the purpose of custom Serialization, where we can decide what to store in stream.
+
+Externalizable interface present in java.io, is used for Externalization which extends Serializable interface. It consist of two methods which we have to override to write/read object into/from stream which are-
+
+// to read object from stream
+void readExternal(ObjectInput in) 
+
+// to write object into stream
+void writeExternal(ObjectOutput out) 
+
+Key differences between Serializable and Externalizable
+
+Implementation : Unlike Serializable interface which will serialize the variables in object with just by implementing interface, here we have to explicitly mention what fields or variables you want to serialize.
+Methods : Serializable is marker interface without any methods. Externalizable interface contains two methods: writeExternal() and readExternal().
+Process: Default Serialization process will take place for classes implementing Serializable interface. Programmer defined Serialization process for classes implementing Externalizable interface.
+Backward Compatibility and Control: If you have to support multiple versions, you can have full control with Externalizable interface. You can support different versions of your object. If you implement Externalizable, it’s your responsibility to serialize super class.
+public No-arg constructor: Serializable uses reflection to construct object and does not require no arg constructor. But Externalizable requires public no-arg constructor.
+================================================================================================================================================================================================================================
+Transient key word?
+
+transient is a Java keyword which marks a member variable not to be serialized when it is persisted to streams of bytes. When an object is transferred through the network, the object needs to be 'serialized'. Serialization converts the object state to serial bytes.
+================================================================================================================================================================================================================================
+Class level lock?
+
+Class level lock is achieved by keyword "Static Synchronized,where as object level is achieved only by synchronized keyword. Object level lock is achieved to restrict same object to operate through different thread,where as class level lock is achieved to restrict any object to operate.
+
+
+================================================================================================================================================================================================================================
+Question on serialization
+================================================================================================================================================================================================================================
+Types of statements in jdbc?
+
+Statement	Use this for general-purpose access to your database. Useful when you are using static SQL statements at runtime. The Statement interface cannot accept parameters.
+PreparedStatement	Use this when you plan to use the SQL statements many times. The PreparedStatement interface accepts input parameters at runtime.
+CallableStatement	Use this when you want to access the database stored procedures. The CallableStatement interface can also accept runtime input parameters.
+================================================================================================================================================================================================================================
+
+What is the difference between Statement and PreparedStatement?
+Statement
+- The parameter value is fixed
+- Compiles and executes every time
+
+PreparedStatement
+- The parameter can be supplied at run time
+- Precompiled ( compiled once ) and executes once for n number of parameter values.
+================================================================================================================================================================================================================================
+benifit of prepared statements
+
+PreparedStatement objects are used to execute repetitive SQL statements. Compared to Statement object execution, Prepared Statement object creation is faster. The reason is the object is pre compiled, by eliminating the compilation task by DBMS. The PreparedStatement object can be used by just replacing the parameters.
+
+Precompilation and DB-side caching of the SQL statement leads to overall faster execution and the ability to reuse the same SQL statement in batches.
+
+Automatic prevention of SQL injection attacks by builtin escaping of quotes and other special characters. Note that this requires that you use any of the PreparedStatement setXxx() methods to set the values
+
+Eases setting of non-standard Java objects in a SQL string, e.g. Date, Time, Timestamp, BigDecimal, InputStream (Blob) and Reader (Clob). On most of those types you can't "just" do a toString() as you would do in a simple Statement. You could even refactor it all to using PreparedStatement#setObject() inside a loop as demonstrated in the utility method below:
+
+public static void setValues(PreparedStatement preparedStatement, Object... values) throws SQLException {
+    for (int i = 0; i < values.length; i++) {
+        preparedStatement.setObject(i + 1, values[i]);
+    }
+}
+================================================================================================================================================================================================================================
+What are sequences in oracle?
+
+Sequence is a feature supported by some database systems to produce unique values on demand. Some DBMS like MySQL supports AUTO_INCREMENT in place of Sequence. AUTO_INCREMENT is applied on columns, it automatically increments the column value by 1 each time a new record is inserted into the table.
+================================================================================================================================================================================================================================
+left outer join and right join
+
+Simple Example: Lets say you have a Students table, and a Lockers table. In SQL, the first table you specify in a join, Students, is the LEFT table, and the second one, Lockers, is the RIGHT table.
+
+Each student can be assigned to a locker, so there is a LockerNumber column in the Student table. More than one student could potentially be in a single locker, but especially at the beginning of the school year, you may have some incoming students without lockers and some lockers that have no students assigned.
+
+For the sake of this example, lets say you have 100 students, 70 of which have lockers. You have a total of 50 lockers, 40 of which have at least 1 student and 10 lockers have no student.
+
+INNER JOIN is equivalent to "show me all students with lockers".
+Any students without lockers, or any lockers without students are missing.
+Returns 70 rows
+
+LEFT OUTER JOIN would be "show me all students, with their corresponding locker if they have one". 
+This might be a general student list, or could be used to identify students with no locker. 
+Returns 100 rows
+
+RIGHT OUTER JOIN would be "show me all lockers, and the students assigned to them if there are any". 
+This could be used to identify lockers that have no students assigned, or lockers that have too many students. 
+Returns 80 rows (list of 70 students in the 40 lockers, plus the 10 lockers with no student)
+
+FULL OUTER JOIN would be silly and probably not much use. 
+Something like "show me all students and all lockers, and match them up where you can" 
+Returns 110 rows (all 100 students, including those without lockers. Plus the 10 lockers with no student)
+
+CROSS JOIN is also fairly silly in this scenario.
+It doesn't use the linked lockernumber field in the students table, so you basically end up with a big giant list of every possible student-to-locker pairing, whether or not it actually exists.
+Returns 5000 rows (100 students x 50 lockers). Could be useful (with filtering) as a starting point to match up the new students with the empty lockers.
+
+
+================================================================================================================================================================================================================================
+What is webservice and how is it differ from web application? -- DONE
+Web applications are defined by being interactive. You're supposed to use a web application in order to perform a function and use some of the web applications features. Lots of web applications don't even have real informative content or data exactly. People are just supposed to use them in order to perform additional tasks, using their features to accomplish something. You use a web application to check your incoming messages, for instance, or play a game.
+
+
+Web service is a technology by which two or more remote web applications interact with each other over network/internet. It can be implemented using Java, .net, PHP etc. Web pages allow people to communicate and collaborate with each other while web services allow programs to communicate and collaborate with each other.
+A web service is essentially a collection of open protocols and standards used for exchanging data between applications or systems. Software applications written in various programming languages and running on various platforms can use web services to exchange data over computer networks like the Internet in a manner similar to inter-process communication on a single computer. This interoperability (e.g., between Java and Python, or Windows and Linux applications) is due to the use of open standards (XML, SOAP, HTTP).
+
+
+Web Application
+
+A web application is a software application that a user runs in the web browser. It have the following features.
+
+It has a User Interface
+Runs in Client - Server environment
+Client runs it with the help of a web browser
+Server process the data based on client request and provide response
+Web Service
+
+A web service is an Application Program Interface (API) that runs on the server, which provide data to the client over http through a standardized messaging system. (XML, JSON, etc...). Web services are further classified into SOAP and REST. In the present day scenario most services prefer REST over SOAP.
+
+Some other use cases of Web Services are
+
+PayPal api
+Facebook api
+Twitter api
+Conclusion
+
+================================================================================================================================================================================================================================
+Is SessionFactory thread safe?
+
+Both Web Application and Web Service are a kind of same thing, but web application is for the users and Web Service is for Program <==> Program communication.
+
+SessionFactory is Hibernates concept of a single datastore and is threadsafe so that many threads can access it concurrently and request for sessions and immutable cache of compiled mappings for a single database. A SessionFactory is usually only built once at startup. SessionFactory should be wrapped in some kind of singleton so that it can be easily accessed in an application code. 
+
+SessionFactory sessionFactory = new Configuration().configure().buildSessionfactory();
+
+What about session?
+
+The Session  object was designed to be used by a single thread. Internally, the Session uses many non-thread-safe data structures so it’s impossible to make it thread-safe.
+More, you shouldn’t even need to use a thread-safe Session . If your use case is to share the cached entities, then you should use the second-level cache instead which is thread-safe and can be used in a clustered environment.
+That being said, the need for having a thread-safe Session is a code smell indicating a flaw in the design of the data access layer.
+
+================================================================================================================================================================================================================================
+What is stateless and stateful?
+
+Stateless server doesn't maintain anything related to the user e.g. Take the example of a static files like css/JavaScript/images so when server serves these files it needn't to store whom these files are being served. I think you can assume CDN server to be stateless.
+Stateful server maintains whom it serves e.g. If a user logged into the website then server maintained a unique identifier for this user so that it shall recognise ther user whenever there is next request from the user.
+
+================================================================================================================================================================================================================================
+Rest is stateful or stateless?
+
+Stateless
+================================================================================================================================================================================================================================
+What is advantage of soap over rest
+
+SOAP	REST
+1)	SOAP is a protocol.	REST is an architectural style.
+2)	SOAP stands for Simple Object Access Protocol.	REST stands for REpresentational State Transfer.
+3)	SOAP can't use REST because it is a protocol.	REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
+4)	SOAP uses services interfaces to expose the business logic.	REST uses URI to expose business logic.
+5)	JAX-WS is the java API for SOAP web services.	JAX-RS is the java API for RESTful web services.
+6)	SOAP defines standards to be strictly followed.	REST does not define too much standards like SOAP.
+7)	SOAP requires more bandwidth and resource than REST.	REST requires less bandwidth and resource than SOAP.
+8)	SOAP defines its own security.	RESTful web services inherits security measures from the underlying transport.
+9)	SOAP permits XML data format only.	REST permits different data format such as Plain text, HTML, XML, JSON etc.
+10)	SOAP is less preferred than REST.	REST more preferred than SOAP.
+
+
+Benefits of REST Over SOAP
+In addition to using HTTP for simplicity, REST offers a number of other benefits over SOAP:
+
+REST allows a greater variety of data formats, whereas SOAP only allows XML.
+Coupled with JSON (which typically works better with data and offers faster parsing), REST is generally considered easier to work with.
+Thanks to JSON, REST offers better support for browser clients.
+REST provides superior performance, particularly through caching for information that’s not altered and not dynamic.
+It is the protocol used most often for major services such as Yahoo, Ebay, Amazon, and even Google.
+REST is generally faster and uses less bandwidth. It’s also easier to integrate with existing websites with no need to refactor site infrastructure. This enables developers to work faster rather than spend time rewriting a site from scratch. Instead, they can simply add additional functionality.
+
+
+Benefits of SOAP Over REST
+Because you can achieve most outcomes using either protocol, it’s sometimes a matter of personal preference. However, there are some use cases that SOAP tends to be better-suited for. For instance, if you need more robust security, SOAP’s support for WS-Security can come in handy. It offers some additional assurances for data privacy and integrity. It also provides support for identity verification through intermediaries rather than just point-to-point, as provided by SSL (which is supported by both SOAP and REST).
+
+Another advantage of SOAP is that it offers built-in retry logic to compensate for failed communications. REST, on the other hand, doesn’t have a built-in messaging system. If a communication fails, the client has to deal with it by retrying. There’s also no standard set of rules for REST. This means that both parties (the service and the consumer) need to understand both content and context.
+================================================================================================================================================================================================================================
+key difference between setter and constructor injection?
+
+A class that takes a required dependency as a constructor argument can only be instantiated if that argument is provided (you should have a guard clause to make sure the argument is not null.) A constructor therefore enforces the dependency requirement whether or not you're using Spring, making it container-agnostic.
+
+If you use setter injection, the setter may or may not be called, so the instance may never be provided with its dependency. The only way to force the setter to be called is using @Required or @Autowired , which is specific to Spring and is therefore not container-agnostic.
+
+So to keep your code independent of Spring, use constructor arguments for injection.
+
+We need the assurance from the IoC container that, before using any bean, the injection of necessary beans must be done.
+
+In setter injection strategy, we trust the IoC container that it will first create the bean first but will do the injection right before using the bean using the setter methods. And the injection is done according to your configuration. If you somehow misses to specify any beans to inject in the configuration, the injection will not be done for those beans and your dependent bean will not function accordingly when it will be in use!
+
+But in constructor injection strategy, container imposes (or must impose) to provide the dependencies properly while constructing the bean. This was addressed as " container-agnostic manner", as we are required to provide dependencies while creating the bean, thus making the visibility of dependency, independent of any IoC container.
+
+================================================================================================================================================================================================================================
+which is more secure soap or rest? why?
+================================================================================================================================================================================================================================
+What is design pattern and what is the advantage of using design pattern?
+================================================================================================================================================================================================================================
+What is hibernate caching and why is it needed?
+================================================================================================================================================================================================================================
+What is difference between @Restcontroller and @Controller annotations
+================================================================================================================================================================================================================================
+When do you use Interface in your application?
+================================================================================================================================================================================================================================
+Difference between jpa and hibernate?
+================================================================================================================================================================================================================================
+Difference between split and substring?
+================================================================================================================================================================================================================================
+s = india
+s.substring (0,2) will it produce new string?
+================================================================================================================================================================================================================================
+How will you check if a string available in a huge file?
+================================================================================================================================================================================================================================
+Available methods in Object class?
+================================================================================================================================================================================================================================
+notify? notifyall?
+================================================================================================================================================================================================================================
+Synchronized method vs Synchronized block
+================================================================================================================================================================================================================================
+what is dispacher Servlet?
+================================================================================================================================================================================================================================
+servlet container has dependency injection?
+================================================================================================================================================================================================================================
+Why do we go for Factory pattern?
+================================================================================================================================================================================================================================
+Lazy loading in Hibernate?
+
+A hibernare lazy load example will look like this:
+
+@OneToMany( mappedBy = "category", fetch = FetchType.LAZY )
+private Set<ProductEntity> products;
+Another attribute parallel to "FetchType.LAZY" is "FetchType.EAGER" which is just opposite to LAZY i.e. it will load association entity as well when owner entity is fetched first time.
+
+The default behavior is to load ‘property values eagerly’ and to load ‘collections lazily’. Contrary to what you might remember if you have used plain Hibernate 2 (mapping files) before, where all references (including collections) are loaded eagerly by default.
+Also note that @OneToMany and @ManyToMany associations are defaulted to LAZY loading; and @OneToOne and @ManyToOne are defaulted to EAGER loading. This is important to remember to avoid any pitfall in future.
+================================================================================================================================================================================================================================
+Hibernate name query
+
+Named queries in hibernate is a technique to group the HQL statements in single location, and lately refer them by some name whenever need to use them. It helps largely in code cleanup because these HQL statements are no longer scattered in whole code.
+
+Apart from above, below are some minor advantages of named queries:
+
+Fail fast: Their syntax is checked when the session factory is created, making the application fail fast in case of an error.
+Reusable: They can be accessed and used from several places which increase re-usability.
+DepartmentEntity.java
+@Entity
+@Table(name = "DEPARTMENT", uniqueConstraints = {
+                    @UniqueConstraint(columnNames = "ID"),
+                    @UniqueConstraint(columnNames = "NAME") })
+@NamedQueries
+(
+    {
+        @NamedQuery(name=DepartmentEntity.GET_DEPARTMENT_BY_ID, query=DepartmentEntity.GET_DEPARTMENT_BY_ID_QUERY),
+        @NamedQuery(name=DepartmentEntity.UPDATE_DEPARTMENT_BY_ID, query=DepartmentEntity.UPDATE_DEPARTMENT_BY_ID_QUERY)
+    }
+)
+public class DepartmentEntity implements Serializable {
+     
+    static final String GET_DEPARTMENT_BY_ID_QUERY = "from DepartmentEntity d where d.id = :id";
+    public static final String GET_DEPARTMENT_BY_ID = "GET_DEPARTMENT_BY_ID";
+     
+    static final String UPDATE_DEPARTMENT_BY_ID_QUERY = "UPDATE DepartmentEntity d SET d.name=:name where d.id = :id";
+    public static final String UPDATE_DEPARTMENT_BY_ID = "UPDATE_DEPARTMENT_BY_ID";
+	
+	-------------------------------------
+	
+	
+	
+	TestHibernateNamedQuery.java
+public class TestHibernateNamedQuery
+{
+    public static void main(String[] args)
+    {
+        //Open the hibernate session
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try
+        {
+            //Update record using named query
+            Query query = session.getNamedQuery(DepartmentEntity.UPDATE_DEPARTMENT_BY_ID)
+                                        .setInteger("id", 1)
+                                        .setString("name", "Finance");
+            query.executeUpdate();
+
+================================================================================================================================================================================================================================
+What are scopes and questions on it?
+================================================================================================================================================================================================================================
+What is a self join?
+================================================================================================================================================================================================================================
+Why Indexes are used?
+================================================================================================================================================================================================================================
+what are spring repositories?
+================================================================================================================================================================================================================================
+Hibernate Pagination?
+Wat is runnable and callable?
+Wait and notify belong to which class?
+List the Object class methods.?
+
+Defog Tech --> check playlist on youtube
+
+How to make a class immutable?
+Examples of immutable classes othe than string?
+Java generics
+Junit
+
+Deloitte:
+
+what are the implicit objects in jsp?
+by default what are variable types in Interface?
+can a method be static and final?
+Hibernate cache levels?
+Ways to create string objects
+When a string is created using new operator where will it get created?
+What is intern function use
+Junit test?
+UI part?
+How to make class Singleton?
+final ArrayList<String> s = new ArrayList<String> (); --> is it a valid statement?
+Difference between sleep and wait in threads
+why wait method need to called in synchronized block
+
+
+SOLID PRINCIPLES?
+how spring mvc works interally?
+@RequestMapping working?
+What are functional interfaces? what are the benifits of the functional interfaces?
+What are streams in java?
+how spring boot does auto configuration?
+how can we create multi data sources in spring boot?
+Spring bean lifecycle
+
+
+Starvation and Deadlock
+in producer and consumer problem does dead lock occure?
+When thread locks the object, where this information is stored in the java?
+
+Thread pool
+ThreadLocal
+Thread executor service.
+Thread factory
+Thread session id
+callable interface
+
+difference between runnable and callable?
+
+Benifits of stream api in java
+
+
+POS
+IOT
+SDLC knowledge
