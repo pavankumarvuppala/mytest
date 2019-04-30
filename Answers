@@ -219,6 +219,20 @@ Available methods in Object class?
 notify? notifyall?
 ================================================================================================================================================================================================================================
 Synchronized method vs Synchronized block
+
+The difference is in which lock is being acquired:
+
+synchronized method acquires a lock on the whole object. This means no other thread can use any synchronized method in the whole object while the method is being run by one thread.
+
+synchronized blocks acquires a lock in the object between parentheses after the synchronized keyword. Meaning no other thread can acquire a lock on the locked object until the synchronized block exits.
+
+So if you want to lock the whole object, use a synchronized method. If you want to keep other parts of the object accessible to other threads, use synchronized block.
+
+If you choose the locked object carefully, synchronized blocks will lead to less contention, because the whole object/class is not blocked.
+
+This applies similarly to static methods: a synchronized static method will acquire a lock in the whole class object, while a synchronized block inside a static method will acquire a lock in the object between parentheses.
+
+When you synchronize a method, you are effectively synchronizing to the object itself. In the case of a static method, you're synchronizing to the class of the object. So the following two pieces of code execute the same way:
 ================================================================================================================================================================================================================================
 what is dispacher Servlet?
 ================================================================================================================================================================================================================================
@@ -295,33 +309,330 @@ Why Indexes are used?
 what are spring repositories?
 ================================================================================================================================================================================================================================
 Hibernate Pagination?
+================================================================================================================================================================================================================================
 Wat is runnable and callable?
+A Callable needs to implement call() method while a Runnable needs to implement run() method.
+A Callable can return a value but a Runnable cannot.
+A Callable can throw checked exception but a Runnable cannot.
+A Callable can be used with ExecutorService#invokeXXX(Collection<? extends Callable<T>> tasks) methods but a Runnable cannot be.
+
+public interface Runnable {
+    void run();
+}
+
+public interface Callable<V> {
+    V call() throws Exception;
+}
+================================================================================================================================================================================================================================
 Wait and notify belong to which class?
+
+to the object class
+================================================================================================================================================================================================================================
 List the Object class methods.?
 
-Defog Tech --> check playlist on youtube
+Object as a Superclass
+The Object class, in the java.lang package, sits at the top of the class hierarchy tree. Every class is a descendant, direct or indirect, of the Object class. Every class you use or write inherits the instance methods of Object. You need not use any of these methods, but, if you choose to do so, you may need to override them with code that is specific to your class. The methods inherited from Object that are discussed in this section are:
 
+protected Object clone() throws CloneNotSupportedException
+      Creates and returns a copy of this object.
+public boolean equals(Object obj)
+      Indicates whether some other object is "equal to" this one.
+protected void finalize() throws Throwable
+      Called by the garbage collector on an object when garbage
+      collection determines that there are no more references to the object
+public final Class getClass()
+      Returns the runtime class of an object.
+public int hashCode()
+      Returns a hash code value for the object.
+public String toString()
+      Returns a string representation of the object.
+The notify, notifyAll, and wait methods of Object all play a part in synchronizing the activities of independently running threads in a program, which is discussed in a later lesson and won't be covered here. There are five of these methods:
+
+public final void notify()
+public final void notifyAll()
+public final void wait()
+public final void wait(long timeout)
+public final void wait(long timeout, int nanos)
+
+
+
+================================================================================================================================================================================================================================
 How to make a class immutable?
-Examples of immutable classes othe than string?
+To create an immutable class in java, you have to do following steps.
+
+- Declare the class as final so it can’t be extended.
+- Make all fields private so that direct access is not allowed.
+- Don’t provide setter methods for variables
+- Make all mutable fields final so that it’s value can be assigned only once.
+- Initialize all the fields via a constructor performing deep copy.
+- Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+================================================================================================================================================================================================================================
+
+Examples of immutable classes other than string?
+Some famous immutable classes in the Standard API:
+
+java.lang.String (already mentioned)
+The wrapper classes for the primitive types: java.lang.Integer, java.lang.Byte, java.lang.Character, java.lang.Short, java.lang.Boolean, java.lang.Long, java.lang.Double, java.lang.Float
+java.lang.StackTraceElement (used in building exception stacktraces)
+Most enum classes are immutable, but this in fact depends on the concrete case. (Don't implement mutable enums, this will screw you up somewhen.) I think that at least all enum classes in the standard API are in fact immutable.
+
+java.math.BigInteger and java.math.BigDecimal (at least objects of those classes themselves, subclasses could introduce mutability, though this is not a good idea)
+
+java.io.File. Note that this represents an object external to the VM (a file on the local system), which may or may not exist, and has some methods modifying and querying the state of this external object. But the File object itself stays immutable. (All other classes in java.io are mutable.)
+
+java.awt.Font - representing a font for drawing text on the screen (there may be some mutable subclasses, but this would certainly not be useful)
+
+java.awt.BasicStroke - a helper object for drawing lines on graphic contexts
+java.awt.Color - (at least objects of this class, some subclasses may be mutable or depending on some external factors (like system colors)), and most other implementations of java.awt.Paint like
+java.awt.GradientPaint,
+java.awt.LinearGradientPaint
+java.awt.RadialGradientPaint,
+(I'm not sure about java.awt.TexturePaint)
+java.awt.Cursor - representing the bitmap for the mouse cursor (here too, some subclasses may be mutable or depending on outer factors)
+
+java.util.Locale - representing a specific geographical, political, or cultural region.
+
+java.util.UUID - a as much as possible globally unique identifier
+while most collections are mutable, there are some wrapper methods in the java.util.Collections class, which return an unmodifiable view on a collection. If you pass them a collection not known anywhere, these are in fact immutable collections. Additionally, Collections.singletonMap(), .singletonList, .singleton return immutable one-element collections, and there are also immutable empty ones.
+
+java.net.URL and java.net.URI - representing a resource (on the internet or somewhere else)
+
+java.net.Inet4Address and java.net.Inet6Address, java.net.InetSocketAddress
+most subclasses of java.security.Permission (representing permissions needed for some action or given to some code), but not java.security.PermissionCollection and subclasses.
+All classes of java.time except DateTimeException are immutable. Most of the classes of the subpackages of java.time are immutable too.
+
+================================================================================================================================================================================================================================
+
 Java generics
 Junit
 
 Deloitte:
-
+================================================================================================================================================================================================================================
 what are the implicit objects in jsp?
-by default what are variable types in Interface?
+1	request
+
+This is the HttpServletRequest object associated with the request.
+
+2	response
+
+This is the HttpServletResponse object associated with the response to the client.
+
+3	out
+
+This is the PrintWriter object used to send output to the client.
+
+4	session
+
+This is the HttpSession object associated with the request.
+
+5	application
+
+This is the ServletContext object associated with the application context.
+
+6	config
+
+This is the ServletConfig object associated with the page.
+
+7	pageContext
+
+This encapsulates use of server-specific features like higher performance JspWriters.
+
+8	page
+
+This is simply a synonym for this, and is used to call the methods defined by the translated servlet class.
+
+9	Exception
+
+The Exception object allows the exception data to be accessed by designated JSP.
+================================================================================================================================================================================================================================
+
+by default what are variable types in Interface and why?
+static and final
+
+Interface variables are static because Java interfaces cannot be instantiated in their own right; the value of the variable must be assigned in a static context in which no instance exists. The final modifier ensures the value assigned to the interface variable is a true constant that cannot be re-assigned by program code.
+================================================================================================================================================================================================================================
+
 can a method be static and final?
+yes. eg: main method
+================================================================================================================================================================================================================================
 Hibernate cache levels?
+
+Hibernate provides 3 types of caching. 
+
+
+1. Session Cache
+    The session cache caches objects within the current session. It is enabled by default in Hibernate. Read more about  Session Cache . Objects in the session cache reside in the same memory location. 
+
+2. Second Level Cache
+
+     The second level cache is responsible for caching objects across sessions. When this is turned on, objects will first be searched in the cache and if they are not found, a database query will be fired. Read here on how to implement  Second Level Cache. Second level cache will be used when the objects are loaded using their primary key. This includes fetching of associations. Second level cache objects are constructed and reside in different memory locations. 
+
+3. Query Cache
+
+Query Cache is used to cache the results of a query. Read here on how to implement query cache. When the query cache is turned on, the results of the query are stored against the combination query and parameters. Every time the query is fired the cache manager  checks for the combination of parameters and query. If the results are found in the cache, they are returned, otherwise a database transaction is initiated.  As you can see, it is not a good idea to cache a query if it has a number of parameters, because then a single parameter can take a number of values. For each of these combinations the results are stored in the memory. This  can lead to extensive memory usage. 
+
+================================================================================================================================================================================================================================
 Ways to create string objects
+
+Using new keyword
+This is the common way to create a String object in java.
+
+ 
+String str1= new String("Hello!");
+
+Using character array
+You could also convert character array into String here
+
+ 
+char ch[]={ 'H','e','l','l','o','!',};
+String str1=new String(ch);
+
+Java String Class
+Java String Class represents character strings. The java.lang.String class provides a lot of methods to work on string. Java String is not a primitive data type like int and long. It is basically an object that represents sequence of char values . It is like an array of characters works same as java string.
+================================================================================================================================================================================================================================
+
 When a string is created using new operator where will it get created?
+
+first it checks if it exists in constant pool
+in the Heap also it throws a copy in the constant pool
+================================================================================================================================================================================================================================
+
+Rules for using Interface
+Methods inside Interface must not be static, final, native or strictfp.
+All variables declared inside interface are implicitly public static final variables(constants).
+All methods declared inside Java Interfaces are implicitly public and abstract, even if you don't use public or abstract keyword.
+Interface can extend one or more other interface.
+Interface cannot implement a class.
+Interface can be nested inside another interface.
+
+================================================================================================================================================================================================================================
 What is intern function use
+intern() method : In Java, when we perform any operation using intern() method, it returns a canonical representation for the string object. A pool is managed by String class.
+
+When the intern() method is executed then it checks whether the String equals to this String Object is in the pool or not.
+If it is available, then the string from the pool is returned. Otherwise, this String object is added to the pool and a reference to this String object is returned.
+It follows that for any two strings s and t, s.intern() == t.intern() is true if and only if s.equals(t) is true.
+It is advised to use equals(), not ==, to compare two strings. This is because == operator compares memory locations, while equals() method compares the content stored in two objects.
+================================================================================================================================================================================================================================
 Junit test?
 UI part?
+================================================================================================================================================================================================================================
 How to make class Singleton?
-final ArrayList<String> s = new ArrayList<String> (); --> is it a valid statement?
-Difference between sleep and wait in threads
-why wait method need to called in synchronized block
 
+Singleton class means you can create only one object for the given class. You can create a singleton class by making its constructor as private, so that you can restrict the creation of the object. Provide a static method to get instance of the object, wherein you can handle the object creation inside the class only. In this example we are creating object by using static block.
+
+
+Code:
+
+package com.java2novice.algos;
+ 
+public class MySingleton {
+ 
+    private static MySingleton myObj;
+     
+    static{
+        myObj = new MySingleton();
+    }
+     
+    private MySingleton(){
+     
+    }
+     
+    public static MySingleton getInstance(){
+        return myObj;
+    }
+     
+    public void testMe(){
+        System.out.println("Hey.... it is working!!!");
+    }
+     
+    public static void main(String a[]){
+        MySingleton ms = getInstance();
+        ms.testMe();
+    }
+}
+
+================================================================================================================================================================================================================================
+final ArrayList<String> s = new ArrayList<String> (); --> is it a valid statement?
+yes but you cannot reassign the reference variable s it throws exception
+Exception in thread "main" java.lang.Error: Unresolved compilation problem: 
+	The final local variable s cannot be assigned. It must be blank and not using a compound assignment
+
+	at MainClass.main(MainClass.java:14)
+	
+================================================================================================================================================================================================================================
+What's the difference between @Component, @Repository & @Service annotations in Spring?
+
+@Controller
+
+The @Controller annotation indicates that a particular class serves the role of a controller. The @Controller annotation acts as a stereotype for the annotated class, indicating its role.
+What’s special about @Controller?
+We cannot switch this annotation with any other like @Service or @Repository, even though they look same. The dispatcher scans the classes annotated with @Controller and detects @RequestMapping annotations within them. We can use @RequestMapping on/in only those classes annotated with @Controller.
+
+
+@Service
+@Service beans hold the business logic and call methods in the repository layer.
+What’s special about @Service?
+Apart from the fact that it's used to indicate, that it's holding the business logic, there’s nothing else noticeable in this annotation; but who knows, Spring may add some additional exceptional in future.
+
+
+@Repository
+This is to indicate that the class defines a data repository.
+What’s special about @Repository?
+In addition to pointing out, that this is an Annotation based Configuration, @Repository’s job is to catch platform specific exceptions and re-throw them as one of Spring’s unified unchecked exception. For this, we’re provided with PersistenceExceptionTranslationPostProcessor, that we are required to add in our Spring’s application context like this:
+
+<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+This bean post processor adds an advisor to any bean that’s annotated with @Repository so that any platform-specific exceptions are caught and then re-thrown as one of Spring’s unchecked data access exceptions.
+
+================================================================================================================================================================================================================================
+Difference between sleep and wait in threads
+
+wait()
+wait() method releases the lock.
+wait() is the method of Object class.
+wait() is the non-static method - public final void wait() throws InterruptedException { //...}
+wait() should be notified by notify() or notifyAll() methods.
+wait() method needs to be called from a loop in order to deal with false alarm.
+
+wait() method must be called from synchronized context (i.e. synchronized method or block), otherwise it will throw IllegalMonitorStateException
+
+sleep()
+sleep() method doesn't release the lock.
+sleep() is the method of java.lang.Thread class.
+sleep() is the static method - public static void sleep(long millis, int nanos) throws InterruptedException { //... }
+after the specified amount of time, sleep() is completed.
+sleep() better not to call from loop(i.e. see code below).
+sleep() may be called from anywhere. there is no specific requirement.
+
+
+One key difference not yet mentioned is that while sleeping a Thread does not release the locks it holds, while waiting releases the lock on the object that wait() is called on.
+
+synchronized(LOCK) {
+    Thread.sleep(1000); // LOCK is held
+}
+
+
+synchronized(LOCK) {
+    LOCK.wait(); // LOCK is not held
+}
+
+================================================================================================================================================================================================================================
+why wait method need to called in synchronized block
+Why wait(), notify(), notifyAll() must be called inside a synchronized method/block?
+In Java, any object can act as a monitor - that's an entity with a single lock, an entry queue, and a waiting queue. An object's method without qualifed by the keyword synchronized  can be invoked by any number of  threads at any time, the lock is ignored. The synchronized method of an object, one and only one thread, who owns the lock of that object, can be permitted to run that method at any time;i.e. a synchronized method is mutually exclusive . If, at the time of invocation, another thread owns the lock, then the calling thread will be put in the Blocked state and is added to the entry queue.
+
+The wait(), notify(), and notifyAll() methods should be called for an object only when the current thread has already locked the object's lock. This point sometimes goes unnoticed because programmers are used to calling these methods from within synchronized methods or blocks. Otherwise, you will get "java.lang.IllegalMonitorStateException: current thread not owner" at runtime.
+
+When a thread running in a synchronized method of an object is calling the wait() method of the same object, that thread releases the lock of the object and is added to that object's waiting queue. As long as it's there, it sits idle. Note also that wait() forces the thread to release its lock. This means that it must own the lock of an object before calling the wait() method of that (same) object. Hence the thread must be in one of the object's synchronized methods or synchronized block before calling wait().
+
+When a thread invokes an object's notify() or notifyAll() method, one (an arbitrary thread) or all of the threads in its waiting queue are removed from the waiting queue to the entry queue. They then actively contend for the object's lock, and the one that gets the lock goes on to execute. If no threads are waiting in the waiting queue, then notify() and notifyAll() have no effect. Before calling the notify() or notifyAll() method of an object, a thread must own the lock of the object. Hence it must be in one of the object's  synchronized methods or synchronized block.
+
+A thread in the waiting queue of an object can run again only when some other thread calls the notify() (or the notifyAll) method of the same object.
+
+The reason to call wait() is that the thread does not want to execute a block of code until a particular state to be achieved. It wants to wait until a particular state to be achieved. The reason to call notify() or notifyAll() method is that the thread will signal others that "a particular state has been achieved". The state is a communication channel between threads and it must be shared mutable state.
+
+For example, one thread read data from a buffer and one thread write data into buffer. The reading data thread needs to wait until the writing data thread completly write a block data into the buffer. The wirting data thread needs to wait until the reading data thread completly read the data from the buffer. If wait(), notify(), and notifyAll() methods can be called by a ordinary method , the reading thread calls wait() and the thread is being added to waiting queue . At just the same moment, the writing thread calls notify() to signal the condition changes. The reading thread misses the change and waits forever. Hence, they must be called inside a synchronized method or block which is mutually exclusive.
+================================================================================================================================================================================================================================
 
 SOLID PRINCIPLES?
 how spring mvc works interally?
