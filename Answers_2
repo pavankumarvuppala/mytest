@@ -1,0 +1,185 @@
+================================================================================================================================================================================================================================
+
+Java generics:
+Used for compile time type safety
+================================================================================================================================================================================================================================
+
+
+What are scopes and questions on it?
+singleton
+This scopes the bean definition to a single instance per Spring IoC container (default).
+
+
+prototype
+This scopes a single bean definition to have any number of object instances.
+
+request
+This scopes a bean definition to an HTTP request. Only valid in the context of a web-aware Spring ApplicationContext.
+
+session
+This scopes a bean definition to an HTTP session. Only valid in the context of a web-aware Spring ApplicationContext.
+	
+global-session
+This scopes a bean definition to a global HTTP session. Only valid in the context of a web-aware Spring ApplicationContext.
+
+
+================================================================================================================================================================================================================================
+Hibernate Pagination?
+Pagination Using Query
+The Query interface of Hibernate, which is an object-oriented representation of a Hibernate query, provides the setFirstRow() and setMaxResults() methods for pagination. The setFirstRow() method sets the first row to retrieve while the setMaxResults() method sets the maximum number of rows to retrieve from the result set that the Query generates. So if you want to list the first five records from the result set, you will call the methods as query.setFirstResult(0) and query.setMaxResults(5). Note that we passed 0 to setFirstResult() because records in a Query result set starts from the index 0, and we want to start from the first record.
+
+
+================================================================================================================================================================================================================================
+What is design pattern and what is the advantage of using design pattern?
+
+Design Patterns in Java
+A design patterns are well-proved solution for solving the specific problem/task.
+
+Now, a question will be arising in your mind what kind of specific problem? Let me explain by taking an example.
+
+Problem Given:
+Suppose you want to create a class for which only a single instance (or object) should be created and that single object can be used by all other classes.
+
+Solution:
+Singleton design pattern is the best solution of above specific problem. So, every design pattern has some specification or set of rules for solving the problems. What are those specifications, you will see later in the types of design patterns.
+
+But remember one-thing, design patterns are programming language independent strategies for solving the common object-oriented design problems. That means, a design pattern represents an idea, not a particular implementation.
+
+By using the design patterns you can make your code more flexible, reusable and maintainable. It is the most important part because java internally follows design patterns.
+
+To become a professional software developer, you must know at least some popular solutions (i.e. design patterns) to the coding problems.
+
+
+ 
+Advantage of design pattern:
+They are reusable in multiple projects.
+They provide the solutions that help to define the system architecture.
+They capture the software engineering experiences.
+They provide transparency to the design of an application.
+They are well-proved and testified solutions since they have been built upon the knowledge and experience of expert software developers.
+Design patterns don?t guarantee an absolute solution to a problem. They provide clarity to the system architecture and the possibility of building a better system.
+When should we use the design patterns?
+We must use the design patterns during the analysis and requirement phase of SDLC(Software Development Life Cycle).
+
+Design patterns ease the analysis and requirement phase of SDLC by providing information based on prior hands-on experiences.
+
+
+Benefits of Design Patterns
+Design patterns have two major benefits. First, they provide you with a way to solve issues related to software development using a proven solution. The solution facilitates the development of highly cohesive modules with minimal coupling. They isolate the variability that may exist in the system requirements, making the overall system easier to understand and maintain. Second, design patterns make communication between designers more efficient. Software professionals can immediately picture the high-level design in their heads when they refer the name of the pattern used to solve a particular issue when discussing system design.
+================================================================================================================================================================================================================================
+What is hibernate caching and why is it needed?
+Caching in hibernate
+Caching functionality is designed to reduce the amount of necessary database access. When the objects that are cached reside in memory. You have the flexibility to limit the usage of memory and store the items in disk storage. The implementation will depend on the underlying cache manager. There are various  flavors of caching available, but it is better to cache non-transactional and read-only data. 
+
+Hibernate provides 3 types of caching. 
+
+
+1. Session Cache
+    The session cache caches objects within the current session. It is enabled by default in Hibernate. Read more about  Session Cache . Objects in the session cache reside in the same memory location. 
+
+2. Second Level Cache
+
+     The second level cache is responsible for caching objects across sessions. When this is turned on, objects will first be searched in the cache and if they are not found, a database query will be fired. Read here on how to implement  Second Level Cache. Second level cache will be used when the objects are loaded using their primary key. This includes fetching of associations. Second level cache objects are constructed and reside in different memory locations. 
+
+3. Query Cache
+
+Query Cache is used to cache the results of a query. Read here on how to implement query cache. When the query cache is turned on, the results of the query are stored against the combination query and parameters. Every time the query is fired the cache manager  checks for the combination of parameters and query. If the results are found in the cache, they are returned, otherwise a database transaction is initiated.  As you can see, it is not a good idea to cache a query if it has a number of parameters, because then a single parameter can take a number of values. For each of these combinations the results are stored in the memory. This  can lead to extensive memory usage. 
+================================================================================================================================================================================================================================
+What is difference between @Restcontroller and @Controller annotations
+================================================================================================================================================================================================================================
+When do you use Interface in your application?
+
+Purposes of Interfaces
+create loosely coupled software
+support design by contract (an implementor must provide the entire interface)
+allow for pluggable software
+allow different objects to interact easily
+hide implementation details of classes from each other
+facilitate reuse of software
+
+
+================================================================================================================================================================================================================================
+Difference between jpa and hibernate?
+JPA Is a specification and Hibernate is implementation of JPA specification
+================================================================================================================================================================================================================================
+Difference between split and substring?
+Since String.Split returns a string[], using a 60-way Split would result in about sixty needless allocations per line. Split goes through your entire string, and creates sixty new object plus the array object itself. Of these sixty one objects you keep exactly one, and let garbage collector deal with the remaining sixty.
+
+If you are calling this in a tight loop, a substring would definitely be more efficient: it goes through the portion of your string up to the second comma ,, and then creates one new object that you keep.
+
+String s = "quick,brown,fox,jumps,over,the,lazy,dog";
+int from = s.indexOf(',');
+int to = s.indexOf(',', from+1);
+String brown = s.substring(from+1, to);
+
+
+================================================================================================================================================================================================================================
+s = india
+s.substring (0,2) will it produce new string?
+yes
+================================================================================================================================================================================================================================
+How will you check if a string available in a huge file?
+================================================================================================================================================================================================================================
+Available methods in Object class?
+================================================================================================================================================================================================================================
+notify? notifyall?
+================================================================================================================================================================================================================================
+what is dispacher Servlet?
+================================================================================================================================================================================================================================
+servlet container has dependency injection?
+================================================================================================================================================================================================================================
+Why do we go for Factory pattern?
+================================================================================================================================================================================================================================
+
+1.Creational Design Pattern
+Factory Pattern
+Abstract Factory Pattern
+Singleton Pattern
+Prototype Pattern
+Builder Pattern.
+
+2. Structural Design Pattern
+Adapter Pattern
+Bridge Pattern
+Composite Pattern
+Decorator Pattern
+Facade Pattern
+Flyweight Pattern
+Proxy Pattern
+
+3. Behavioral Design Pattern
+Chain Of Responsibility Pattern
+Command Pattern
+Interpreter Pattern
+Iterator Pattern
+Mediator Pattern
+Memento Pattern
+Observer Pattern
+State Pattern
+Strategy Pattern
+Template Pattern
+Visitor Pattern
+================================================================================================================================================================================================================================
+which is more secure soap or rest? why?
+Junit test?
+UI part?
+Junit
+what are spring repositories?
+Types of view resolvers?
+how spring mvc works interally?
+@RequestMapping working?
+how spring boot does auto configuration?
+how can we create multi data sources in spring boot?
+Spring bean lifecycle
+Starvation and Deadlock
+Serialization and its id?
+When thread locks the object, where this information is stored in the java?
+POS
+IOT
+SDLC knowledge
+Thread pool
+ThreadLocal
+Thread executor service.
+Thread factory
+Thread session id
+SOLID PRINCIPLES?
