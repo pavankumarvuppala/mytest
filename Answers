@@ -194,29 +194,7 @@ In setter injection strategy, we trust the IoC container that it will first crea
 
 But in constructor injection strategy, container imposes (or must impose) to provide the dependencies properly while constructing the bean. This was addressed as " container-agnostic manner", as we are required to provide dependencies while creating the bean, thus making the visibility of dependency, independent of any IoC container.
 
-================================================================================================================================================================================================================================
-which is more secure soap or rest? why?
-================================================================================================================================================================================================================================
-What is design pattern and what is the advantage of using design pattern?
-================================================================================================================================================================================================================================
-What is hibernate caching and why is it needed?
-================================================================================================================================================================================================================================
-What is difference between @Restcontroller and @Controller annotations
-================================================================================================================================================================================================================================
-When do you use Interface in your application?
-================================================================================================================================================================================================================================
-Difference between jpa and hibernate?
-================================================================================================================================================================================================================================
-Difference between split and substring?
-================================================================================================================================================================================================================================
-s = india
-s.substring (0,2) will it produce new string?
-================================================================================================================================================================================================================================
-How will you check if a string available in a huge file?
-================================================================================================================================================================================================================================
-Available methods in Object class?
-================================================================================================================================================================================================================================
-notify? notifyall?
+
 ================================================================================================================================================================================================================================
 Synchronized method vs Synchronized block
 
@@ -233,12 +211,7 @@ If you choose the locked object carefully, synchronized blocks will lead to less
 This applies similarly to static methods: a synchronized static method will acquire a lock in the whole class object, while a synchronized block inside a static method will acquire a lock in the object between parentheses.
 
 When you synchronize a method, you are effectively synchronizing to the object itself. In the case of a static method, you're synchronizing to the class of the object. So the following two pieces of code execute the same way:
-================================================================================================================================================================================================================================
-what is dispacher Servlet?
-================================================================================================================================================================================================================================
-servlet container has dependency injection?
-================================================================================================================================================================================================================================
-Why do we go for Factory pattern?
+
 ================================================================================================================================================================================================================================
 Lazy loading in Hibernate?
 
@@ -299,16 +272,8 @@ public class TestHibernateNamedQuery
                                         .setString("name", "Finance");
             query.executeUpdate();
 
-================================================================================================================================================================================================================================
-What are scopes and questions on it?
-================================================================================================================================================================================================================================
-What is a self join?
-================================================================================================================================================================================================================================
-Why Indexes are used?
-================================================================================================================================================================================================================================
-what are spring repositories?
-================================================================================================================================================================================================================================
-Hibernate Pagination?
+
+
 ================================================================================================================================================================================================================================
 Wat is runnable and callable?
 A Callable needs to implement call() method while a Runnable needs to implement run() method.
@@ -401,12 +366,7 @@ java.net.Inet4Address and java.net.Inet6Address, java.net.InetSocketAddress
 most subclasses of java.security.Permission (representing permissions needed for some action or given to some code), but not java.security.PermissionCollection and subclasses.
 All classes of java.time except DateTimeException are immutable. Most of the classes of the subpackages of java.time are immutable too.
 
-================================================================================================================================================================================================================================
 
-Java generics
-Junit
-
-Deloitte:
 ================================================================================================================================================================================================================================
 what are the implicit objects in jsp?
 1	request
@@ -513,9 +473,7 @@ When the intern() method is executed then it checks whether the String equals to
 If it is available, then the string from the pool is returned. Otherwise, this String object is added to the pool and a reference to this String object is returned.
 It follows that for any two strings s and t, s.intern() == t.intern() is true if and only if s.equals(t) is true.
 It is advised to use equals(), not ==, to compare two strings. This is because == operator compares memory locations, while equals() method compares the content stored in two objects.
-================================================================================================================================================================================================================================
-Junit test?
-UI part?
+
 ================================================================================================================================================================================================================================
 How to make class Singleton?
 
@@ -633,33 +591,253 @@ The reason to call wait() is that the thread does not want to execute a block of
 
 For example, one thread read data from a buffer and one thread write data into buffer. The reading data thread needs to wait until the writing data thread completly write a block data into the buffer. The wirting data thread needs to wait until the reading data thread completly read the data from the buffer. If wait(), notify(), and notifyAll() methods can be called by a ordinary method , the reading thread calls wait() and the thread is being added to waiting queue . At just the same moment, the writing thread calls notify() to signal the condition changes. The reading thread misses the change and waits forever. Hence, they must be called inside a synchronized method or block which is mutually exclusive.
 ================================================================================================================================================================================================================================
+Static class in Java
 
-SOLID PRINCIPLES?
+You cannot use the static keyword with a class unless it is an inner class. ... It can be accessed without instantiating the outer class, using other static members. Just like static members, a static nested class does not have access to the instance variables and methods of the outer class.
+
+Can a class be static in Java ?
+The answer is YES, we can have static class in java. In java, we have static instance variables as well as static methods and also static block. Classes can also be made static in Java.
+Java allows us to define a class within another class. Such a class is called a nested class. The class which enclosed nested class is known as Outer class. In java, we can’t make Top level class static. Only nested classes can be static.
+
+================================================================================================================================================================================================================================
+in producer and consumer problem does dead lock occur?
+The problem describes two processes, the producer and the consumer, who share a common, fixed-size buffer used as a queue. The producer's job is to generate data, put it into the buffer, and start again. ... An inadequate solution could result in a deadlock where both processes are waiting to be awakened.
+================================================================================================================================================================================================================================
+
+
+================================================================================================================================================================================================================================
+Streams In Java
+Introduced in Java 8, the Stream API is used to process collections of objects. A stream is a sequence of objects that supports various methods which can be pipelined to produce the desired result.
+The features of Java stream are –
+
+A stream is not a data structure instead it takes input from the Collections, Arrays or I/O channels.
+Streams don’t change the original data structure, they only provide the result as per the pipelined methods.
+Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined. Terminal operations mark the end of the stream and return the result.
+Different Operations On Streams-
+Intermediate Operations:
+
+map: The map method is used to map the items in the collection to other objects according to the Predicate passed as argument.
+List number = Arrays.asList(2,3,4,5);
+List square = number.stream().map(x->x*x).collect(Collectors.toList());
+filter: The filter method is used to select elements as per the Predicate passed as argument.
+List names = Arrays.asList("Reflection","Collection","Stream");
+List result = names.stream().filter(s->s.startsWith("S")).collect(Collectors.toList());
+sorted: The sorted method is used to sort the stream.
+List names = Arrays.asList("Reflection","Collection","Stream");
+List result = names.stream().sorted().collect(Collectors.toList());
+Terminal Operations:
+
+collect: The collect method is used to return the result of the intermediate operations performed on the stream.
+List number = Arrays.asList(2,3,4,5,3);
+Set square = number.stream().map(x->x*x).collect(Collectors.toSet());
+forEach: The forEach method is used to iterate through every element of the stream.
+List number = Arrays.asList(2,3,4,5);
+number.stream().map(x->x*x).forEach(y->System.out.println(y));
+reduce: The reduce method is used to reduce the elements of a stream to a single value.
+The reduce method takes a BinaryOperator as a parameter.
+List number = Arrays.asList(2,3,4,5);
+int even = number.stream().filter(x->x%2==0).reduce(0,(ans,i)-> ans+i);
+
+
+================================================================================================================================================================================================================================
+difference between runnable and callable?
+A Callable needs to implement call() method while a Runnable needs to implement run() method.
+A Callable can return a value but a Runnable cannot.
+A Callable can throw checked exception but a Runnable cannot.
+A Callable can be used with ExecutorService#invokeXXX(Collection<? extends Callable<T>> tasks) methods but a Runnable cannot be.
+
+public interface Runnable {
+    void run();
+}
+
+public interface Callable<V> {
+    V call() throws Exception;
+}
+================================================================================================================================================================================================================================
+Benifits of stream api in java
+how Annotations work?
+java based annotation vs spring annotations
+================================================================================================================================================================================================================================
+wait method throws two types of exceptions what are they?
+
+We all know that in order to invoke Object.wait(), this call must be placed in synchronized block, otherwise an IllegalMonitorStateException is thrown
+InterruptedException is a perfectly normal event to occur when using Object.wait(), and thread.sleep() coupled with Object.notify(), and Object.notifyAll().
+
+================================================================================================================================================================================================================================
+java.lang.InterruptedException – How to handle InterruptedException
+Posted by: Sotirios-Efstathios Maneas  in exceptions July 16th, 2014 0 2165 Views
+
+In this example we will discuss about InterruptedException in Java. This exception is thrown when a thread is interrupted. The thread could be in either waiting, sleeping or running state and this exception can be thrown either before or during a thread’s activity.
+
+This exception extends the Exception class and thus, can be classified as a checked exception. Checked exceptions must be explicitly declared in a method’s or constructor’s throw clause.
+
+Finally, the InterruptedException exists since the 1.0 version of Java.
+================================================================================================================================================================================================================================
+What are Annotations?
+One word to explain Annotation is Metadata. Metadata is data about data. So Annotations are metadata for code. For example look at following piece of code.
+
+@Override
+public String toString() {
+return "This is String Representation of current object.";
+}
+I have overridden the toString() method and used @Override annotation in above code. Even if I don’t put @Override, code works properly without any issue. So what’s the advantage and what does this annotation stand for? @Override tells the compiler that this method is an overridden method (metadata about method) and if any such method does not exist in parent class, then throw a compiler error (method does not override a method from its super class). Now if I would have made a typography mistake and used method name as toStrring() {double r} and if I wouldn’t have used @Override, my code would have compiled and executed successfully but outcome would be different from what I would have accepted. So now we understand what annotations are but still it’s good to read formal definitions
+Annotation is special kind of Java construct used to decorate a class, method, field, parameter, variable, constructor, or package. It’s the vehicle chosen by JSR-175 to provide metadata.
+================================================================================================================================================================================================================================
+
+How annotations work?
+How Annotations Work and How to Write Custom Annotations
+Before I start this explanation, I will suggest you download this sample code for annotations (AnnotationsSample.zip) and keep that open in any IDE of your choice, as it will help you to understand following explanation better.
+
+Writing annotations is very simple. You can compare annotation definition to an interface definition. Let’s have a look at two examples – One is standard @Override annotation and second is a custom annotation @Todo
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.SOURCE)
+public @interface Override {
+}
+Something seems fishy about @Override, it’s not doing anything, how it checks if a method is defined in parent class. Well, don’t be surprised, I am not kidding you. Override annotation’s definition has that much code only. This is the most important part to understand and I am reiterating myself – Annotations are only metadata and they do not contain any business logic. Tough to digest but true. If annotations do not contain the logic than someone else must be doing something and that someone is consumer of this annotation metadata. Annotations only provide some information about the attribute (class/method/package/field) on which it is defined. Consumer is a piece of code which reads this information and then performs necessary logic.
+When we are talking about standard annotations like @Override – JVM is the consumer and it works at bytecode level. Now that’s something application developers can’t control and can’t use for custom annotations. So we need to write consumers for our annotations by ourselves.
+
+Let’s understand the key terms used for writing annotations one by one. In the above examples, you will see annotations are used on annotations.
+
+J2SE 5.0 provides four annotations in the java.lang.annotation package that are used only when writing annotations:
+@Documented – Whether to put the annotation in Javadocs
+@Retention – When the annotation is needed
+@Target? – Places the annotation can go
+@Inherited – Whether subclasses get the annotation.
+@Documented – A simple market annotations which tells whether to add Annotation in java doc or not.
+
+@Retention – Defines for how long the annotation should be kept.
+
+RetentionPolicy.SOURCE – Discard during the compile. These annotations don’t make any sense after the compile has completed, so they aren’t written to the bytecode. Examples @Override, @SuppressWarnings
+RetentionPolicy.CLASS – Discard during class load. Useful when doing bytecode-level post-processing. Somewhat surprisingly, this is the default.
+RetentionPolicy.RUNTIME – Do not discard. The annotation should be available for reflection at runtime. This is what we generally use for our custom annotations.
+
+@Target – Where annotation can be placed. If you don’t specify this, annotation can be placed anywhere. Following are the valid values. One important point here is, it’s inclusive only which means if you want annotation on 7 attributes and just want to exclude only one attribute, you need to include all 7 while defining target.
+
+ElementType.TYPE (class, interface, enum)
+
+ElementType.FIELD (instance variable)
+
+ElementType.METHOD
+
+ElementType.PARAMETER
+
+ElementType.CONSTRUCTOR
+
+ElementType.LOCAL_VARIABLE
+
+ElementType.ANNOTATION_TYPE (on another annotation)
+
+ElementType.PACKAGE (remember package-info.java)
+
+@Inherited – Controls whether annotation should affect subclass.
+
+Example:
+
+@interface Author{
+String value();
+}
+@Author("Yashwant")
+public void someMethod() {
+}
+
+
+================================================================================================================================================================================================================================
+What are functional interfaces? what are the benifits of the functional interfaces?
+Functional Interfaces In Java
+A functional interface is an interface that contains only one abstract method. They can have only one functionality to exhibit. From Java 8 onwards, lambda expressions can be used to represent the instance of a functional interface. A functional interface can have any number of default methods. Runnable, ActionListener, Comparable are some of the examples of functional interfaces.
+Before Java 8, we had to create anonymous inner class objects or implement these interfaces.
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java program to demonstrate functional interface 
+  
+class Test 
+{ 
+    public static void main(String args[]) 
+    { 
+        // create anonymous inner class object 
+        new Thread(new Runnable() 
+        { 
+            @Override
+            public void run() 
+            { 
+                System.out.println("New thread created"); 
+            } 
+        }).start(); 
+    } 
+} 
+
+@FunctionalInterface Annotation
+@FunctionalInterface annotation is used to ensure that the functional interface can’t have more than one abstract method. In case more than one abstract methods are present, the compiler flags an ‘Unexpected @FunctionalInterface annotation’ message. However, it is not mandatory to use this annotation.
+
+Java 8 onwards, we can assign lambda expression to its functional interface object like this:
+
+filter_none
+edit
+play_arrow
+
+brightness_4
+// Java program to demonstrate Implementation of 
+// functional interface using lambda expressions 
+  
+class Test 
+{ 
+  public static void main(String args[]) 
+  { 
+  
+    // lambda expression to create the object 
+    new Thread(()-> 
+       {System.out.println("New thread created");}).start(); 
+  } 
+} 
+
+Important Points/Observations:
+
+A functional interface has only one abstract method but it can have multiple default methods.
+@FunctionalInterface annotation is used to ensure an interface can’t have more than one abstract method. The use of this annotation is optional.
+The java.util.function package contains many builtin functional interfaces in Java 8.
+
+java.util.function Package:
+The java.util.function package in Java 8 contains many builtin functional interfaces like-
+
+Predicate: The Predicate interface has an abstract method test which gives a Boolean value as a result for the specified argument. Its prototype is
+public Predicate
+{
+   public boolean test(T  t);
+ }
+BinaryOperator: The BinaryOperator interface has an abstract method apply which takes two argument and returns a result of same type. Its prototype is
+public interface BinaryOperator 
+{
+     public T apply(T x, T y);
+}       
+Function: The Function interface has an abstract method apply which takes argument of type T and returns a result of type R. Its prototype is
+public interface Function 
+{
+   public R apply(T t);
+}
+
+
+================================================================================================================================================================================================================================
+================================================================================================================================================================================================================================
+Types of view resolvers?
 how spring mvc works interally?
 @RequestMapping working?
-What are functional interfaces? what are the benifits of the functional interfaces?
-What are streams in java?
 how spring boot does auto configuration?
 how can we create multi data sources in spring boot?
 Spring bean lifecycle
-
-
 Starvation and Deadlock
-in producer and consumer problem does dead lock occure?
+Serialization and its id?
 When thread locks the object, where this information is stored in the java?
-
+POS
+IOT
+SDLC knowledge
 Thread pool
 ThreadLocal
 Thread executor service.
 Thread factory
 Thread session id
-callable interface
-
-difference between runnable and callable?
-
-Benifits of stream api in java
-
-
-POS
-IOT
-SDLC knowledge
+SOLID PRINCIPLES?
