@@ -1,0 +1,137 @@
+Should you use external libraries in your code? What are the benefits and drawbacks? What precautions can be taken?
+External libraries are extremely helpful when writing large and complex programs - they save the effort of having to code something which has already been implemented by someone else.
+There are a few drawbacks to using an external library:
+It can have bugs in the implementation, especially corner cases which only surface when some users use the library.
+The library may not be frequently maintained and it may be difficult to contact the owner regarding bugs.
+The library or some of the used features can be deprecated or deleted at any time.
+But this does not mean you should not use external libraries. There are some excellent ways to protect programs from being impacted very badly by such problems. One of the best ways to protect from external dependencies is to design that part of the code using Interfaces. Interfaces allow defining a contract or a specification that is binding on all implementers of the interface when implemented correctly. This frees the consumer to directly use the interface without having to care about the implementation.
+If a bug is discovered in the implementation of a library, or the library gets deprecated, then it can be switched out for another library without having to modify the consumers of the interface. This type of design will make the whole program more robust.
+======================================================================================================================================================================================================================================
+
+ADVANCEDJAVACONCURRENCY IMMUTABLE MULTITHREADING
+What are Immutable Classes in Java? What are Immutable Classes useful for?
+Immutable classes are those which cannot be changed once instantiated. The value of the object of an immutable class will always remain the same. Either the value cannot be changed or any change to the vale will result in a new immutable instance. String, Boolean and other primitive wrapper classes are all Immutable. All the variables and the class itself are declared final to prevent modification from anywhere.
+Immutable classes are very useful for concurrency and multi-threaded programs. They allow using objects at the same time across any number of threads without having a conflict and without requiring any synchronization. They can also be stored in memory more efficiently when used in a multithreaded context. They can be cached easily and used in a static context.
+======================================================================================================================================================================================================================================
+
+ADVANCEDJAVAMEMORY
+Analyze the following code and explain what parts of the code will be stored in the Heap and what parts will be stored in the Stack at each line:
+public static void main(String...args) {
+  int x = 5;
+  MyObject my = new MyObject();
+  System.out.println(“Value of x: ” + x);
+}
+
+private void print(final MyObject my) {
+  System.out.println(my.toString());
+}
+Before the main method is called, the program allocates Heap space and puts all the runtime classes and class-level objects into the Heap.
+Line 1 - Creates stack space for the main method. The String arguments are in the Heap in the PermGen area, while references to the strings are stored in the Stack.
+Line 2 - Puts the primitive x on the Stack.
+Line 3 - Creates MyObject on the Heap and stores reference my on the Stack.
+Line 4 - Creates a String in PermGen.
+Line 6 - Allocates a new block on the top of the Stack for method print and stores the reference for MyObject my in the new Stack again. This is because Java is Pass-by-Value.
+Line 7 - Creates a new String in Permgen.
+
+======================================================================================================================================================================================================================================
+ADVANCEDJAVAPRINCIPLES
+Explain why Java is Pass-by-Value and not Pass-by-Reference. Give an example.
+Pass-by-value is when the reference to an object is copied to a new variable.
+Pass-by-reference is when a reference to an object is passed directly to the other method.
+When a method is called in Java, new Stack space is allocated for the method and all variables in the arguments are copied to the new Stack block.
+Example:
+private void A() {
+  Something s = new Something();
+  s.setMe("S");
+  System.out.println(s.getMe());
+  B(s);
+  System.out.println(s.getMe());
+}
+
+private void B(Something x) {
+  x.setMe("X");
+  x = new Something();
+  x.setMe("Y");
+}
+In the first print statement, S is printed. In the second print statement, X is printed. This is because the variable x is local to B and the variable s is local to A. Before x is initialized to a new object, both x and s are pointing to the same object on the Heap, but they are individual references. Changing the object to which x points will not change the object to which s points.
+In a pass-by-reference language, the second print statement would print Y.
+
+======================================================================================================================================================================================================================================
+ADVANCEDJAVACOLLECTIONS
+Does a HashMap Key object have to be Immutable?
+HashMap calculates the location of an object based on the value of the hashCode function. If the values used to calculate the hashCode of an object change after it is inserted in the HashMap, this will result in the Key returning a different address than the one originally used. In this case, the HashMap cannot locate the original Key and the object is lost in the Map, indicating that the Key does not exist.
+This is not a compiler or runtime requirement by the HashMap class, but, due to the problems it can create, it is an expectation from any good developer to look out for this.
+======================================================================================================================================================================================================================================
+
+ADVANCEDJAVAMEMORY
+What are the automated memory management features of Java?
+In comparison to other languages, the Java Runtime has several automated memory management features to improve the safety, reliability, efficiency, and ease of programming.
+Users are not required to allocate and reclaim memory when creating objects. The JVM will create objects in the heap.
+Memory is only allocated to objects. References to each object are stored in the stack as required.
+The automatic garbage collector tracks unused objects and reclaims memory back from them in the next collection cycle.
+To release an object, there should be no reference to that object or to any parent of that object in a hierarchical relation like a Collection.
+Consequently, releasing a collection without holding on to the objects in that collection will result in the entire collection, including the objects contained within, to be garbage collected.
+
+======================================================================================================================================================================================================================================
+ADVANCEDJAVADESIGN MEMORY PRINCIPLES
+Describe a potential way of creating a memory leak in Java. Give an example.
+Because Java has automated memory management, it precludes code errors relating to allocation of memory for objects and reclaiming memory from objects. This prevents user errors arising due to incorrect code for memory management, but it does not avoid design flaws that can result in memory leaks.
+Example of Design flaw:
+We are required to implement a Cache. This requires storing objects that can be retrieved quickly. In order to implement a basic cache, we can use a HashMap.
+Now, if the Cache program only implements the basic cache operations to insert, get, and delete objects from the Cache, it will result in a big memory leak. It is essential for a Cache to have a purging operation. This can occur over time, with usage or any other relevant factor.
+If it is not included, then the Cache will keep growing while it is storing objects that will most likely not be used again. This is a memory leak which can be avoided by implementing a good cache eviction technique.
+======================================================================================================================================================================================================================================
+
+ADVANCEDJAVAINHERITANCE METHOD OVERRIDING
+If a super class method is throwing RuntimeException, can it be overriden in a subclass method throwing NullPointerException?
+In Java, it is possible to override a method with a different throws signature if the base class method only throws Runtime Exception (unchecked exceptions). If the base class method throws checked exceptions, then the subclass method has to have one of the following:
+ADVANCEDJAVAGENERICS
+What is type erasure?
+The Type information used for Generic objects is only available at compile time. The compiler removes all the type information when converting to byte-code. This makes the type information unavailable at Runtime and the Generic type is converted to Raw type. The compiler provides checks at compile time to prevent runtime errors for incorrect type information.
+The case where things can go wrong is when directly using Raw types in the code. The compiler will raise a warning in this case but it will not fail.
+======================================================================================================================================================================================================================================
+
+ADVANCEDJAVAGENERICS
+Is the code compile-time and run-time safe? What do I and K stand for? What is the use of the extends keyword in both places? Explain the get method definition. Explain the wildcard symbols.
+class A<K, I extends List<K>> {
+  public K get(final int index, final I list) {
+    return list.get(idx);
+  }
+}
+
+class B extends A<String, LinkedList<String>> { }
+
+Class C {
+  public static void main(String...args) {
+    A<Integer, ArrayList<Integer>> a = new A<>;
+    B b = new B();
+    A<?, ?> g;
+    A<? extends Integer, ?> f;
+    g = a;
+    g = b;
+    f = a;
+  }
+}
+Yes, this code is compile-time and run-time safe.
+I and K are Generic type parameters used to ensure type safety.
+The extends keyword in the first line defines the scope of the I parameter. The I parameter can only be a sub-type of List of type K. K by default extends Object.
+The second extends keyword is used for inheriting class A and fixing the type parameters of A to String and LinkedList.
+The get method takes an index integer and a List of type K as the parameters. It returns the list value at index, which will have a return type K because the list parameter is fixed to K.
+For example, when get is called on instance b of class B, get will take a LinkedList<String> and return the String at index.
+The wildcard symbols indicate that g can have any type within the bounds of the parameters. That is why a and b can be assigned to it. In the case of f, the first parameter gets limited to Integer sub-types, so only a can be assigned to it, not b. f can be assigned to g, but not the other way round.
+
+======================================================================================================================================================================================================================================
+ADVANCEDJAVAMULTITHREADING
+What is the use of the volatile keyword in Java? What is the happens-before guarantee?
+The volatile keyword is used in multi-threaded programs. It indicates that a variable can be updated by multiple threads. This means that the value of the variable cannot be cached locally and must be directly accessed from main memory every time. volatile variables are not serializable.
+The happens-before guarantee for volatile variables can be explained as follows:
+Writing of a volatile variable results in the writing of all local variables to the main memory. So, any other thread accessing common variables will get all updated values whenever a volatile variable is updated.
+Access to volatile variables cannot be reordered by the compiler. Any statements following access to a volatile variable are guaranteed to be executed after the access statement.
+======================================================================================================================================================================================================================================
+
+ADVANCEDJAVAMULTITHREADING PRINCIPLES
+Explain instruction reordering. In what context can instruction reordering create problems? How can it be fixed?
+Instruction reordering is when the execution order of the code is changed by the JVM at compile time or run time. This is done to optimize the code. Instruction reordering guarantees program order execution. This means that two statements which are related will have a happens-before relation, but two unrelated statements can be executed out-of-order.
+The context where this can cause problems is in a multithreaded environment. There is no program order between threads, so there should be no assumptions on execution order following the code order.
+To avoid reordering problems, threads need to be synchronized properly. Code that needs code order execution should be placed in synchronized blocks.
+======================================================================================================================================================================================================================================
